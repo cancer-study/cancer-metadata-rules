@@ -2,6 +2,8 @@ from edc_constants.constants import DECLINED, NO
 from edc_metadata.constants import NOT_REQUIRED, REQUIRED
 
 from edc_metadata.rules.crf import CrfRuleGroup
+from edc_metadata.rules.crf.crf_rule import CrfRule
+from edc_metadata.rules.predicate import P, PF
 
 
 class BaseRiskAssessmentRuleGroup(CrfRuleGroup):
@@ -33,19 +35,3 @@ class BaseRiskAssessmentRuleGroup(CrfRuleGroup):
     class Meta:
         app_label = 'cancer_subject'
         source_model = f'{app_label}.baseriskassessment'
-
-
-# class GenderRuleGroup(RuleGroup):
-#
-#     gender = ScheduledDataRule(
-#         logic=Logic(
-#             predicate=('gender', 'equals', 'm'),
-#             consequence='not_required',
-#             alternative='new'),
-#         target_model=['baseriskassessmentfemale'])
-#
-#     class Meta:
-#         app_label = 'cancer_subject'
-#         source_fk = None
-#         source_model = RegisteredSubject
-# site_rule_groups.register(GenderRuleGroup)
