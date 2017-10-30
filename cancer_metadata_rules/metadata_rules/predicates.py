@@ -1,11 +1,11 @@
-from edc_metadata.rules import PredicateCollection
+from edc_metadata_rules import PredicateCollection
 from edc_constants.constants import YES
 
 
 class Predicates(PredicateCollection):
 
     app_label = 'cancer_subject'
-    
+
     def func_oncology_plan(self, visit, **kwargs):
         try:
             model_cls = self.get_model('oncologytreatmentplan')
@@ -13,8 +13,7 @@ class Predicates(PredicateCollection):
         except model_cls.DoesNotExist:
             return False
         return True
-    
-    
+
     def func_oncology_record(self, visit, **kwargs):
         try:
             model_cls = self.get_model('oncologytreatmentrecord')
@@ -22,8 +21,7 @@ class Predicates(PredicateCollection):
         except model_cls.DoesNotExist:
             return False
         return True
-    
-    
+
     def func_oncology(self, visit, **kwargs):
         show_radiation_treatment = False
         if self.func_oncology_plan(visit) and self.func_oncology_record(visit):
@@ -35,7 +33,7 @@ class Predicates(PredicateCollection):
         elif not self.unc_oncology_plan(visit) and not self.func_oncology_record(visit):
             show_radiation_treatment = False
         return show_radiation_treatment
-    
+
     def func_haematology(self, visit, **kwargs):
         haematology = self.get_model('resultstorecord').objects.get(
             name='haematology')
@@ -46,8 +44,7 @@ class Predicates(PredicateCollection):
         except model_cls.DoesNotExist:
             return False
         return True
-    
-    
+
     def func_chemistry(self, visit, **kwargs):
         chemistry = self.get_model('resultstorecord').objects.get(
             name='chemistry')
@@ -58,8 +55,7 @@ class Predicates(PredicateCollection):
         except model_cls.DoesNotExist:
             return False
         return True
-    
-    
+
     def func_tubercolosis(self, visit, **kwargs):
         tb = self.get_model('resultstorecord').objects.get(
             name='tubercolosis')
@@ -70,8 +66,7 @@ class Predicates(PredicateCollection):
         except model_cls.DoesNotExist:
             return False
         return True
-    
-    
+
     def func_none_selection(self, visit, **kwargs):
         if_none = self.get_model('resultstorecord').objects.get(name='none')
         try:
@@ -81,4 +76,3 @@ class Predicates(PredicateCollection):
         except model_cls.DoesNotExist:
             return False
         return True
-

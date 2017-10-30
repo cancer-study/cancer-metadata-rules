@@ -1,8 +1,12 @@
-from edc_metadata.rules.predicate import P, PF
 from edc_constants.constants import POS, NEG, UNK
 from edc_metadata.constants import NOT_REQUIRED, REQUIRED
-from edc_metadata.rules.crf.crf_rule import CrfRule
-from edc_metadata.rules.crf import CrfRuleGroup
+
+from edc_metadata_rules import CrfRule
+from edc_metadata_rules import CrfRuleGroup
+from edc_metadata_rules import P, PF
+
+
+app_label = 'cancer_subject'
 
 
 class BHHHivTestRuleGroup(CrfRuleGroup):
