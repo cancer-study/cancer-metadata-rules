@@ -8,6 +8,11 @@ class AppConfig(DjangoAppConfig):
 
 if settings.APP_NAME == 'cancer_metadata_rules':
     from edc_metadata.apps import AppConfig as MetadataAppConfig
+    from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
 
     class EdcMetadataAppConfig(MetadataAppConfig):
         reason_field = {'cancer_metadata_rules.subjectvisit': 'reason'}
+
+    class EdcVisitTrackingAppConfig(BaseEdcVisitTrackingAppConfig):
+        visit_models = {
+            'cancer_subject': ('subject_visit', 'cancer_subject.subjectvisit')}
