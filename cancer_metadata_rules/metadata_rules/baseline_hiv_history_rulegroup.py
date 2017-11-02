@@ -3,7 +3,7 @@ from edc_constants.constants import DWTA, NO
 from edc_metadata.constants import NOT_REQUIRED, REQUIRED
 from edc_metadata_rules import CrfRuleGroup
 from edc_metadata_rules import CrfRule
-from edc_metadata_rules import P
+from edc_metadata_rules import P, PF
 
 
 app_label = 'cancer_subject'
@@ -12,7 +12,7 @@ app_label = 'cancer_subject'
 class BaselineHIVHistoryRuleGroup(CrfRuleGroup):
 
     has_hiv_result = CrfRule(
-        predicate=P(
+        predicate=PF(
             'has_hiv_result',
             func=lambda has_smoked: True if has_smoked in [NO, DWTA] else False),
         consequence=NOT_REQUIRED,

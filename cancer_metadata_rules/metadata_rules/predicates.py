@@ -5,6 +5,7 @@ from edc_constants.constants import YES
 class Predicates(PredicateCollection):
 
     app_label = 'cancer_subject'
+    visit_model = f'{app_label}.subjectvisit'
 
     def func_oncology_plan(self, visit, **kwargs):
         try:
