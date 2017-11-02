@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
-from setuptools import setup
+
 from setuptools import find_packages
+from setuptools import setup
+
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
@@ -10,18 +12,18 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='ambition-metadata-rules',
+    name='cancer-metadata-rules',
     version='0.1.0',
-    author=u'lkepaletswe',
+    author=u'tsetsiba',
     author_email='',
     packages=find_packages(),
     include_package_data=True,
-    url='https://github.com/botswana-harvard/ambition-metadata-rules',
+    url='https://github.com/botswana-harvard/cancer-metadata-rules',
     license='GPL license, see LICENSE',
-    description='ambition',
+    description='cancer',
     long_description=README,
     zip_safe=False,
-    keywords='django ambition',
+    keywords='django cancer',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
