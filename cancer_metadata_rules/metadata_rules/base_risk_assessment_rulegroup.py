@@ -1,13 +1,14 @@
 from edc_constants.constants import DECLINED, NO
 from edc_metadata.constants import NOT_REQUIRED, REQUIRED
 
-from edc_metadata_rules import CrfRuleGroup
+from edc_metadata_rules import CrfRuleGroup, register
 from edc_metadata_rules import CrfRule
 from edc_metadata_rules import PF
 
 app_label = 'cancer_subject'
 
 
+@register()
 class BaseRiskAssessmentRuleGroup(CrfRuleGroup):
 
     has_smoked = CrfRule(
@@ -24,7 +25,7 @@ class BaseRiskAssessmentRuleGroup(CrfRuleGroup):
             func=lambda has_worked_mine: True if has_worked_mine in [NO, DECLINED] else False),
         consequence=NOT_REQUIRED,
         alternative=REQUIRED,
-        target_models=[f'{app_label}.baseriskassessmentsmoking'])
+        target_models=[f'{app_label}.baseriskassessmentmining'])
 
     has_worked_mine = CrfRule(
         predicate=PF(
@@ -32,7 +33,7 @@ class BaseRiskAssessmentRuleGroup(CrfRuleGroup):
             func=lambda has_alcohol: True if has_alcohol in [NO, DECLINED] else False),
         consequence=NOT_REQUIRED,
         alternative=REQUIRED,
-        target_models=[f'{app_label}.baseriskassessmentsmoking'])
+        target_models=[f'{app_label}.baseriskassessmentalcohol'])
 
     class Meta:
         app_label = 'cancer_subject'

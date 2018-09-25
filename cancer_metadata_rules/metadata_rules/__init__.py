@@ -1,5 +1,3 @@
 from .base_risk_assessment_rulegroup import BaseRiskAssessmentRuleGroup
 from .baseline_hiv_history_rulegroup import BaselineHIVHistoryRuleGroup
 from .bhh_hiv_rest_rulegroup import BHHHivTestRuleGroup
-from .predicates import Predicates
-

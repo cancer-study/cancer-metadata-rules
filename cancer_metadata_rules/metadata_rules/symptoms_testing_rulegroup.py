@@ -1,0 +1,25 @@
+from edc_metadata.constants import NOT_REQUIRED, REQUIRED
+
+from edc_metadata_rules import CrfRule, register
+from edc_metadata_rules import CrfRuleGroup
+
+from ..predicates import func_hiv_result
+
+app_label = 'cancer_subject'
+
+
+@register()
+class SymptomsTestingRuleGroup(CrfRuleGroup):
+
+    hiv_test_result = CrfRule(
+        predicate=func_hiv_result,
+        consequence=NOT_REQUIRED,
+        alternative=REQUIRED,
+        target_models=[f'{app_label}.baselinehivhistory',
+                       f'{app_label}.bhhhivtest',
+                       f'{app_label}.bhhwhoillness',
+                       f'{app_label}.haartrecord'])
+
+    class Meta:
+        app_label = 'cancer_subject'
+        source_model = f'{app_label}.symptomsandtesting'

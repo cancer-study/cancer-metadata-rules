@@ -3,7 +3,7 @@ from datetime import datetime
 from arrow.arrow import Arrow
 from dateutil.relativedelta import relativedelta
 from django.test import TestCase, tag
-from edc_constants.constants import YES
+from edc_constants.constants import YES, NO
 
 from edc_reference import LongitudinalRefset
 from edc_reference.tests import ReferenceTestHelper
@@ -11,6 +11,7 @@ from edc_reference.tests import ReferenceTestHelper
 from ..predicates import Predicates
 
 
+@tag('1')
 class TestPredicates(TestCase):
 
     reference_helper_cls = ReferenceTestHelper
@@ -43,3 +44,117 @@ class TestPredicates(TestCase):
             name=self.visit_model,
             reference_model_cls=self.reference_model
         ).order_by('report_datetime')
+
+    def test_oncology_plan_1(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentplan',
+            radiation_plan=YES,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertTrue(pc.func_oncology_plan(self.subject_visits[0]))
+
+    def test_oncology_plan_2(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentplan',
+            radiation_plan=NO,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertFalse(pc.func_oncology_plan(self.subject_visits[0]))
+
+    def test_oncology_record_1(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentrecord',
+            radiation_received=YES,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertTrue(pc.func_oncology_record(self.subject_visits[0]))
+
+    def test_oncology_record_2(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentrecord',
+            radiation_received=NO,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertFalse(pc.func_oncology_record(self.subject_visits[0]))
+
+    def test_oncology_1(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentplan',
+            radiation_plan=NO,
+            visit_code=self.subject_visits[0].visit_code)
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentrecord',
+            radiation_received=NO,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertFalse(pc.func_oncology(self.subject_visits[0]))
+
+    def test_oncology_2(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentplan',
+            radiation_plan=YES,
+            visit_code=self.subject_visits[0].visit_code)
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentrecord',
+            radiation_received=YES,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertTrue(pc.func_oncology(self.subject_visits[0]))
+
+    def test_oncology_3(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentplan',
+            radiation_plan=NO,
+            visit_code=self.subject_visits[0].visit_code)
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentrecord',
+            radiation_received=YES,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertTrue(pc.func_oncology(self.subject_visits[0]))
+
+    def test_oncology_4(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentplan',
+            radiation_plan=YES,
+            visit_code=self.subject_visits[0].visit_code)
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentrecord',
+            radiation_received=NO,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertTrue(pc.func_oncology(self.subject_visits[0]))
+
+    def test_oncology_5(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentplan',
+            radiation_plan='BLAH',
+            visit_code=self.subject_visits[0].visit_code)
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.oncologytreatmentrecord',
+            radiation_received='BLAH',
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertFalse(pc.func_oncology(self.subject_visits[0]))
+
+    def test_haematology_1(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.cancerdiagnosis',
+            results_to_record__in='haematology')
+        self.assertFalse(pc.func_haematology(self.subject_visits[0]))

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +26,11 @@ SECRET_KEY = 'yvnesm+cu1f)0oesr0hndkq2r^7u#wq_a3g%cfuagn5vq!&j&q'
 APP_NAME = 'cancer_metadata_rules'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ETC_DIR = os.path.join(BASE_DIR, 'etc')
 ALLOWED_HOSTS = []
+SITE_ID = 40
+REVIEWER_SITE_ID = 0
 
 
 # Application definition
@@ -38,21 +42,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
+    'edc_action_item.apps.AppConfig',
+    'edc_appointment.apps.AppConfig',
     'edc_base.apps.AppConfig',
-    'cancer_metadata_rules.apps.EdcVisitTrackingAppConfig',
     'edc_visit_schedule.apps.AppConfig',
     'edc_identifier.apps.AppConfig',
     'edc_device.apps.AppConfig',
+    'edc_locator.apps.AppConfig',
+    'edc_lab.apps.AppConfig',
     'edc_reference.apps.AppConfig',
     'edc_metadata_rules.apps.AppConfig',
     'edc_protocol.apps.AppConfig',
+    'edc_timepoint.apps.AppConfig',
     'edc_search.apps.AppConfig',
     'cancer_subject.apps.AppConfig',
-    'cancer_subject_validations.apps.AppConfig',
     'cancer_reference.apps.AppConfig',
     'cancer_visit_schedule.apps.AppConfig',
+    'cancer_metadata_rules.apps.EdcVisitTrackingAppConfig',
     'cancer_metadata_rules.apps.EdcMetadataAppConfig',
     'cancer_metadata_rules.apps.AppConfig',
 ]
@@ -61,9 +70,11 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'edc_subject_dashboard.middleware.DashboardMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -141,7 +152,20 @@ USE_L10N = True
 USE_TZ = True
 
 KEY_PATH = os.path.join(BASE_DIR, 'crypto_fields')
+DEFAULT_APPOINTMENT_MODEL = 'cancer_subject.appointment'
 STATIC_ROOT = os.path.join(BASE_DIR, 'cancer_metadata_rules', 'static')
+EDC_SYNC_FILES_USER = None
+EDC_SYNC_FILES_REMOTE_HOST = None
+EDC_SYNC_FILES_USB_VOLUME = None
+EDC_SYNC_SERVER_IP = None
+
+
+DASHBOARD_URL_NAMES = {
+    'subject_models_url': 'subject_models_url',
+    'subject_listboard_url': 'cancer_dashboard:subject_listboard_url',
+    'screening_listboard_url': 'cancer_dashboard:screening_listboard_url',
+    'subject_dashboard_url': 'cancer_dashboard:subject_dashboard_url',
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 

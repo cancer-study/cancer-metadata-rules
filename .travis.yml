@@ -22,11 +22,11 @@ install:
 - pip install coveralls
 
 before_script:
-- flake8 ambition_subject_validations
+- flake8 cancer_metadata_rules
 - mysql -e 'create database edc character set utf8;'
 
 script:
-- coverage run --source=ambition_metadata_rules manage.py test
+- coverage run --source=cancer_metadata_rules manage.py test
 
 after_success:
 - coveralls
