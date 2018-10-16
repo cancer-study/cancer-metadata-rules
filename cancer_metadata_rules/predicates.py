@@ -38,9 +38,9 @@ class Predicates(PredicateCollection):
         return show_radiation_treatment
 
     def func_haematology(self, visit=None, **kwargs):
-        haematology = django_apps.get_model(
+        result_to_record = django_apps.get_model(
             f'{self.app_label}.resultstorecord')
-        result_to_record = haematology.objects.get(
+        haematology = result_to_record.objects.get(
             name='haematology')
         model_cls = f'{self.app_label}.cancerdiagnosis'
         try:

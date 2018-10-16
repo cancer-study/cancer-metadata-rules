@@ -3,7 +3,7 @@ from datetime import datetime
 from arrow.arrow import Arrow
 from dateutil.relativedelta import relativedelta
 from django.test import TestCase, tag
-from edc_constants.constants import YES, NO
+from edc_constants.constants import YES, NO, POS, NEG
 
 from edc_reference import LongitudinalRefset
 from edc_reference.tests import ReferenceTestHelper
@@ -151,10 +151,38 @@ class TestPredicates(TestCase):
             visit_code=self.subject_visits[0].visit_code)
         self.assertFalse(pc.func_oncology(self.subject_visits[0]))
 
-    def test_haematology_1(self):
+    def test_hiv_result_1(self):
         pc = Predicates()
         self.reference_helper.create_for_model(
             report_datetime=self.subject_visits[0].report_datetime,
-            reference_name=f'{self.app_label}.cancerdiagnosis',
-            results_to_record__in='haematology')
-        self.assertFalse(pc.func_haematology(self.subject_visits[0]))
+            reference_name=f'{self.app_label}.symptomsandtesting',
+            hiv_result=POS,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertTrue(pc.func_hiv_result(self.subject_visits[0]))
+
+    def test_hiv_result_2(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.symptomsandtesting',
+            hiv_test_result=POS,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertTrue(pc.func_hiv_result(self.subject_visits[0]))
+
+    def test_hiv_result_3(self):
+        pc = Predicates()
+        self.reference_helper.create_for_model(
+            report_datetime=self.subject_visits[0].report_datetime,
+            reference_name=f'{self.app_label}.symptomsandtesting',
+            hiv_result=NEG,
+            hiv_test_result=NEG,
+            visit_code=self.subject_visits[0].visit_code)
+        self.assertFalse(pc.func_hiv_result(self.subject_visits[0]))
+
+#     @tag('1')
+#     def test_haematology_1(self):
+#         pc = Predicates()
+#         haematology = ResultsToRecord.objects.create(name='haematology')
+#
+#         CancerDiagnosis.objects.create(results_to_record=haematology)
+#         self.assertFalse(pc.func_haematology(self.subject_visits[0]))
