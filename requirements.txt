@@ -1,7 +1,10 @@
-git+https://github.com/botswana-harvard/cancer-subject.git@develop#egg=cancer_subject
-git+https://github.com/botswana-harvard/cancer-subject-validations.git@develop#egg=cancer_subject_validations
-git+https://github.com/botswana-harvard/cancer-reference.git@develop#egg=cancer_reference
-git+https://github.com/botswana-harvard/cancer-visit-schedule.git@develop#egg=cancer_visit_schedule
+git+https://github.com/cancer-study/cancer-screening.git@develop#egg=cancer_screening
+git+https://github.com/cancer-study/cancer-subject.git@develop#egg=cancer_subject
+git+https://github.com/cancer-study/cancer-subject-validations.git@develop#egg=cancer_subject_validations
+git+https://github.com/cancer-study/cancer-reference.git@develop#egg=cancer_reference
+git+https://github.com/cancer-study/cancer-visit-schedule.git@develop#egg=cancer_visit_schedule
+git+https://github.com/botswana-harvard/django-crypto-fields.git@develop#egg=django_crypto_fields
+git+https://github.com/botswana-harvard/django-revision.git@master#egg=django_revision
 git+https://github.com/botswana-harvard/edc-action-item.git@develop#egg=edc_action_item
 git+https://github.com/botswana-harvard/edc-appointment.git@develop#egg=edc_appointment
 git+https://github.com/botswana-harvard/edc-base.git@develop#egg=edc_base
@@ -31,5 +34,3 @@ git+https://github.com/botswana-harvard/edc-sync-files@develop#egg=edc_sync_file
 git+https://github.com/botswana-harvard/edc-sync@develop#egg=edc_sync
 git+https://github.com/botswana-harvard/edc-visit-schedule.git@develop#egg=edc_visit_schedule
 git+https://github.com/botswana-harvard/edc-visit-tracking.git@develop#egg=edc_visit_tracking
-git+https://github.com/erikvw/django-crypto-fields.git@develop#django-crypto-fields
-git+https://github.com/erikvw/django-revision.git@develop#django-revision

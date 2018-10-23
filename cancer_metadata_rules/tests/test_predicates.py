@@ -9,6 +9,7 @@ from edc_reference import LongitudinalRefset
 from edc_reference.tests import ReferenceTestHelper
 
 from ..predicates import Predicates
+from .models import CancerDiagnosis, ResultsToRecord, ListModel
 
 
 @tag('1')
@@ -179,10 +180,15 @@ class TestPredicates(TestCase):
             visit_code=self.subject_visits[0].visit_code)
         self.assertFalse(pc.func_hiv_result(self.subject_visits[0]))
 
-#     @tag('1')
 #     def test_haematology_1(self):
 #         pc = Predicates()
-#         haematology = ResultsToRecord.objects.create(name='haematology')
+#         ResultsToRecord.objects.create(
+#             name='haematology', short_name='haematology')
+# #         results_to_record = ResultsToRecord.objects.create(name='haematology')
 #
-#         CancerDiagnosis.objects.create(results_to_record=haematology)
+#         cancer = CancerDiagnosis.objects.create()
+#         cancer.results_to_record.set(
+#             subject_visit=self.subject_visits[0],
+#             ResultsToRecord.objects.all())
+#         cancer.save()
 #         self.assertFalse(pc.func_haematology(self.subject_visits[0]))
