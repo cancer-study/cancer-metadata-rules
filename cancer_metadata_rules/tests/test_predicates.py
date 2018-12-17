@@ -9,7 +9,7 @@ from edc_reference import LongitudinalRefset
 from edc_reference.tests import ReferenceTestHelper
 
 from ..predicates import Predicates
-from .models import CancerDiagnosis, ResultsToRecord, ListModel
+# from .models import CancerDiagnosis, ResultsToRecord, ListModel
 
 
 @tag('1')

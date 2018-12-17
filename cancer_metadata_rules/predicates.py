@@ -1,7 +1,6 @@
 from django.apps import apps as django_apps
-
-from edc_metadata_rules import PredicateCollection
 from edc_constants.constants import YES, POS
+from edc_metadata_rules import PredicateCollection
 
 
 class Predicates(PredicateCollection):

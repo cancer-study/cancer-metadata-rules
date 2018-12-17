@@ -5,9 +5,10 @@ from edc_metadata_rules import CrfRule, register
 from edc_metadata_rules import CrfRuleGroup
 from edc_metadata_rules import P
 
-from ..predicates import func_oncology
+from ..predicates import Predicates
 
 app_label = 'cancer_subject'
+pc = Predicates()
 
 
 @register()
@@ -20,7 +21,7 @@ class OncologyTreatmentRecordRuleGroup(CrfRuleGroup):
         target_models=[f'{app_label}.otrchemo'])
 
     radiation_received = CrfRule(
-        predicate=func_oncology,
+        predicate=pc.func_oncology,
         consequence=REQUIRED,
         alternative=NOT_REQUIRED,
         target_models=[f'{app_label}.radiationtreatment'])

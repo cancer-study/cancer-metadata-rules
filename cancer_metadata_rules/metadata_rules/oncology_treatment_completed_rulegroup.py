@@ -1,11 +1,10 @@
-from edc_constants.constants import NO, YES
+from edc_constants.constants import YES
 from edc_metadata.constants import NOT_REQUIRED, REQUIRED
 
 from edc_metadata_rules import CrfRule, register
 from edc_metadata_rules import CrfRuleGroup
 from edc_metadata_rules import P
 
-from ..predicates import func_oncology
 
 app_label = 'cancer_subject'
 
