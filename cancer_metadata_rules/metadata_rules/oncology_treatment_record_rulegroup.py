@@ -1,4 +1,4 @@
-from edc_constants.constants import NO, YES
+from edc_constants.constants import NO
 from edc_metadata.constants import NOT_REQUIRED, REQUIRED
 
 from edc_metadata_rules import CrfRule, register
