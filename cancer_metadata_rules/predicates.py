@@ -39,27 +39,31 @@ class Predicates(PredicateCollection):
     def func_haematology(self, visit=None, **kwargs):
         result_to_record = django_apps.get_model(
             f'{self.app_label}.resultstorecord')
-        haematology = result_to_record.objects.get(
-            name='haematology')
-        model_cls = f'{self.app_label}.cancerdiagnosis'
         try:
+            haematology = result_to_record.objects.get(
+                name='haematology')
+        except result_to_record.DoesNotExist:
+            return False
+        model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
+        print('<<<<<<<<___!!!!')
+        try:
+            print('*********************', model_cls.objects.first().__dict__)
             model_cls.objects.get(
                 subject_visit=visit, results_to_record__in=[haematology])
+            print('>>>>>>>>>>>>>>>>>>!')
         except model_cls.DoesNotExist:
             return False
         return True
 
     def func_chemistry(self, visit=None, **kwargs):
-        values = self.exists(
-            reference_name=f'{self.app_label}.oncologytreatmentrecord',
-            subject_identifier=visit.subject_identifier,
-            report_datetime=visit.report_datetime,
-            field_name='radiation_received')
-        return values[0] == YES
-
-        chemistry = f'{self.app_label}.resultstorecord'.objects.get(
-            name='chemistry')
-        model_cls = f'{self.app_label}.cancerdiagnosis'
+        result_to_record = django_apps.get_model(
+            f'{self.app_label}.resultstorecord')
+        try:
+            chemistry = result_to_record.objects.get(
+                name='chemistry')
+        except result_to_record.DoesNotExist:
+            return False
+        model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
         try:
             model_cls.objects.get(
                 subject_visit=visit, results_to_record__in=[chemistry])
@@ -68,9 +72,14 @@ class Predicates(PredicateCollection):
         return True
 
     def func_tubercolosis(self, visit=None, **kwargs):
-        tb = f'{self.app_label}.resultstorecord'.objects.get(
-            name='tubercolosis')
-        model_cls = f'{self.app_label}.cancerdiagnosis'
+        result_to_record = django_apps.get_model(
+            f'{self.app_label}.resultstorecord')
+        try:
+            tb = result_to_record.objects.get(
+                name='tubercolosis')
+        except result_to_record.DoesNotExist:
+            return False
+        model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
         try:
             model_cls.objects.get(
                 subject_visit=visit, results_to_record__in=[tb])
@@ -79,8 +88,13 @@ class Predicates(PredicateCollection):
         return True
 
     def func_none_selection(self, visit=None, **kwargs):
-        if_none = f'{self.app_label}.resultstorecord'.objects.get(name='none')
-        model_cls = f'{self.app_label}.cancerdiagnosis'
+        result_to_record = django_apps.get_model(
+            f'{self.app_label}.resultstorecord')
+        try:
+            if_none = result_to_record.objects.get(name='none')
+        except result_to_record.DoesNotExist:
+            return False
+        model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
         try:
             model_cls.objects.get(
                 subject_visit=visit, results_to_record__in=[if_none])
