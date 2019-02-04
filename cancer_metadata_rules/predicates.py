@@ -45,12 +45,9 @@ class Predicates(PredicateCollection):
         except result_to_record.DoesNotExist:
             return False
         model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
-        print('<<<<<<<<___!!!!')
         try:
-            print('*********************', model_cls.objects.first().__dict__)
             model_cls.objects.get(
                 subject_visit=visit, results_to_record__in=[haematology])
-            print('>>>>>>>>>>>>>>>>>>!')
         except model_cls.DoesNotExist:
             return False
         return True
