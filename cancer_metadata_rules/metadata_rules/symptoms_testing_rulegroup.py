@@ -14,8 +14,8 @@ class SymptomsTestingRuleGroup(CrfRuleGroup):
 
     hiv_test_result = CrfRule(
         predicate=pc.func_hiv_result,
-        consequence=NOT_REQUIRED,
-        alternative=REQUIRED,
+        consequence=REQUIRED,
+        alternative=NOT_REQUIRED,
         target_models=[f'{app_label}.baselinehivhistory',
                        f'{app_label}.bhhhivtest',
                        f'{app_label}.bhhwhoillness',
