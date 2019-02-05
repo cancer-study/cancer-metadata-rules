@@ -41,7 +41,7 @@ class Predicates(PredicateCollection):
             f'{self.app_label}.resultstorecord')
         try:
             haematology = result_to_record.objects.get(
-                name='haematology')
+                name='Haematology')
         except result_to_record.DoesNotExist:
             return False
         model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
@@ -57,7 +57,7 @@ class Predicates(PredicateCollection):
             f'{self.app_label}.resultstorecord')
         try:
             chemistry = result_to_record.objects.get(
-                name='chemistry')
+                name='Chemistry')
         except result_to_record.DoesNotExist:
             return False
         model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
@@ -73,7 +73,7 @@ class Predicates(PredicateCollection):
             f'{self.app_label}.resultstorecord')
         try:
             tb = result_to_record.objects.get(
-                name='tubercolosis')
+                name='Tubercolosis')
         except result_to_record.DoesNotExist:
             return False
         model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
@@ -88,7 +88,7 @@ class Predicates(PredicateCollection):
         result_to_record = django_apps.get_model(
             f'{self.app_label}.resultstorecord')
         try:
-            if_none = result_to_record.objects.get(name='none')
+            if_none = result_to_record.objects.get(name='None')
         except result_to_record.DoesNotExist:
             return False
         model_cls = django_apps.get_model(f'{self.app_label}.cancerdiagnosis')
